@@ -5,14 +5,25 @@ modules:
       resolver:
         function: resolver
       render: native
-      title: Project_reset
+      title: AI Insights
       icon: https://developer.atlassian.com/platform/forge/images/icons/issue-panel-icon.svg
   function:
     - key: resolver
       handler: index.handler
+  # Lets the app call Claude through Forge LLM (hosted by Atlassian, no API key needed).
+  llm:
+    - key: llm-claude
+      model:
+        - claude
 resources:
   - key: main
     path: src/frontend/index.jsx
+permissions:
+  scopes:
+    # Read the issue, its comments, fields and similar issues.
+    - read:jira-work
+    # Save the analysis as an issue property and set story points.
+    - write:jira-work
 app:
   runtime:
     name: nodejs24.x
